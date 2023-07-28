@@ -7,7 +7,7 @@ import java.util.Map;
  **/
 public class Definition extends Word{
 
-    private Map<String, String> definition;
+    private final Map<String, String> definition;
 
     public Definition(String key, String value) {
         super(key);
@@ -19,11 +19,14 @@ public class Definition extends Word{
         return definition;
     }
 
-    public String program(String key) {
-        return this.definition.get(key);
+    public String getValue(String key) {
+        if(this.definition.containsKey(key)){
+            return this.definition.get(key);
+        }
+        else {return "No Value";}
     }
 
-    public void process() {
-
+    public String program(String key) {
+        return this.definition.get(key);
     }
 }

@@ -1,8 +1,5 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -19,20 +16,12 @@ public class IO extends Word {
     public String in() {
         System.out.println("Enter a string.");
         Scanner s = new Scanner(System.in);
-        String in = s.nextLine();
-        return in;
+        return s.nextLine();
     }
-    public String out (LinkedList<GenericBox> stack) {
-        GenericBox word = stack.get(0);
-        if (word.getContents() instanceof Word) {
-            return ((Word) stack.removeLast().getContents()).getString();
-        } else if (word.getContents() instanceof Number) {
-            return ((Number) stack.removeLast().getContents()).getString();
-        } else if (word.getContents() instanceof Quote) {
-            return ((Quote) stack.removeLast().getContents()).getQuote();
-        } return null;
+    public void out (String s) {
+        System.out.println(s);;
     }
-    public void process() {
-
-    };
+//    public String out (LinkedList<WordBox<Word>> stack) {
+//        return stack.get(0).getWord().getString();
+//    }
 }

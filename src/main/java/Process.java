@@ -2,5 +2,6 @@
  * @author saxDev
  * studentnumber 20188141
  **/
-public class WordStack {
+interface Process {
+    public void process();
 }

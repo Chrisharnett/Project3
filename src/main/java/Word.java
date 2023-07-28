@@ -13,7 +13,7 @@ public class Word {
      *  Stack Operation
      *  I/O
      */
-    private String string;
+    private final String string;
 
     public Word(String string) {
         this.string = string;
@@ -23,21 +23,19 @@ public class Word {
         return string;
     }
 
-    public String putEmTogether(Word x) {
-        String s = x.getString() + " " + this.string;
-        return s;
+    public String putEmTogether(String x) {
+        return x + " " + this.string;
     }
     public String negate() {
         char[] x = this.string.toCharArray();
-        String reverse = "";
+        StringBuilder reverse = new StringBuilder();
         for (int i = x.length-1; i >=+ 0 ; i--) {
-            reverse += x[i];
+            reverse.append(x[i]);
         }
-        return reverse;
+        return reverse.toString();
     }
-    public String multiply(Word x) {
-        int i = (x.getString()).indexOf(this.string);
-        String sub = x.getString().substring(i);
-        return sub;
+    public String multiply(String x) {
+        int i = x.indexOf(this.string);
+        return x.substring(i);
     }
 }

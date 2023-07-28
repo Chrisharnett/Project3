@@ -5,7 +5,7 @@ import java.util.LinkedList;
  * studentnumber 20188141
  **/
 public class Number extends Word {
-    private long value;
+    private final long value;
 
     public Number(String string) {
         super(string);
@@ -20,18 +20,23 @@ public class Number extends Word {
     public long getValue() {
         return value;
     }
-
+    @Override
     public String putEmTogether(String x) {
         Number a  = new Number(x);
         Number b = new Number(this.value + a.getValue());
         return b.getString();
     }
+    @Override
     public String negate() {
         Number n = new Number(this.value * -1);
         return n.getString();
     }
-    public String multiply(Number y) {
-        Number z = new Number(this.value*y.getValue());
+
+
+    @Override
+    public String multiply(String y) {
+        Number x = new Number(y);
+        Number z = new Number(this.value*x.getValue());
         return z.getString();
     }
 }

@@ -9,52 +9,61 @@ public class StackOperation extends Word{
         super(string);
     }
 
-    public LinkedList<GenericBox> runOperation(LinkedList<GenericBox> stack){
-
+    public LinkedList<WordBox<Word>> runOperation(LinkedList<WordBox<Word>> stack){
         switch (super.getString()) {
             case "+":
-                GenericBox x = stack.removeLast();
-                GenericBox y = stack.removeLast();
-                if (x.getContents() instanceof Number && y.getContents() instanceof Number) {
-                    String n = ((Number) x.getContents()).putEmTogether(((Number) y.getContents()).getString());
-                    stack.addLast(new GenericBox(new Number(n)));
-                    return stack;
-                } else if (x.getContents() instanceof Quote || y.getContents() instanceof Quote ||
-                        x.getContents() instanceof Word || y.getContents() instanceof Word){
-                    String newWord = ((Word) x.getContents()).putEmTogether(((Word) y.getContents()));
-                    stack.addLast(new GenericBox(new Quote(newWord)));
-                    return stack;
+                WordBox<Word> x = stack.removeLast();
+                WordBox<Word> y = stack.removeLast();
+                if (x.getWord() instanceof Number && y.getWord() instanceof Number) {
+                    String n = x.getWord().putEmTogether(y.getWord().getString());
+                    stack.addLast(new WordBox<>(new Number(n)));
+                } else {
+                    if (x.getWord() instanceof Number){
+                        x = new WordBox<Word>(new Quote(x.getWord().getString()));
+                    }
+                    else if (y.getWord() instanceof Number){
+                        y = new WordBox<Word>(new Quote(y.getWord().getString()));
+                    }
+                    String newWord = (x.getWord()).putEmTogether((y.getWord()).getString());
+                    stack.addLast(new WordBox<Word>(new Quote(newWord)));
                 }
+                return stack;
             case "-":
-                GenericBox z = stack.removeLast();
-                if (z.getContents() instanceof Number) {
-                    Number n = new Number(((Number) z.getContents()).negate());
-                    stack.addLast(new GenericBox(n));
+                WordBox<Word> z = stack.removeLast();
+                if (z.getWord() instanceof Number) {
+                    Number n = new Number((z.getWord()).negate());
+                    stack.addLast(new WordBox<Word>(n));
                     return stack;
                 }
-                else if (z.getContents() instanceof Quote) {
-                    String n = ((Word) z.getContents()).negate();
-                    stack.addLast(new GenericBox(new Quote(n)));
-                    return stack;                }
+                else if (z.getWord() instanceof Quote) {
+                    String n = ( z.getWord()).negate();
+                    stack.addLast(new WordBox<Word>(new Quote(n)));
+                    return stack;
+                }
             case "*":
-                GenericBox a = stack.removeLast();
-                GenericBox b = stack.removeLast();
-                if (a.getContents() instanceof Number && b.getContents() instanceof Number) {
-                    String n = ((Number) a.getContents()).multiply(((Number) b.getContents()));
-                    stack.addLast(new GenericBox(new Number(n)));
-                    return stack;
-                } else if (a.getContents() instanceof Quote || b.getContents() instanceof Quote){
-                    String newWord = ((Word) a.getContents()).multiply(((Word) b.getContents()));
-                    stack.addLast(new GenericBox(new Quote(newWord)));
-                    return stack;
+                WordBox<Word> a = stack.removeLast();
+                WordBox<Word> b = stack.removeLast();
+                if (a.getWord() instanceof Number && b.getWord() instanceof Number) {
+                    String n = ((Number) a.getWord()).multiply(b.getWord().getString());
+                    stack.addLast(new WordBox<Word>(new Number(n)));
+                } else {
+                    if (a.getWord() instanceof Number){
+                        a = new WordBox<Word>(new Quote(a.getWord().getString()));
+                    }
+                    else if (b.getWord() instanceof Number){
+                        b = new WordBox<Word>(new Quote(b.getWord().getString()));
+                    }
+                    String newWord = (a.getWord()).multiply((b.getWord()).getString());
+                    stack.addLast(new WordBox<Word>(new Quote(newWord)));
                 }
+                return stack;
             case "dup":
-                GenericBox box = stack.get(-1);
+                WordBox<Word> box = stack.get(stack.size()-1);
                 stack.addLast(box);
                 return stack;
             case "swap":
-                GenericBox c = stack.removeLast();
-                GenericBox d = stack.removeLast();
+                WordBox<Word> c = stack.removeLast();
+                WordBox<Word> d = stack.removeLast();
                 stack.addLast(c);
                 stack.addLast(d);
                 return stack;
@@ -62,8 +71,7 @@ public class StackOperation extends Word{
                 stack.removeLast();
                 return stack;
             default:
-                return null;
+                return stack;
         }
     }
-
 }
