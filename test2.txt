@@ -1,1 +1,1 @@
-353 ' 5 ' '* out
+: pop3 pop pop pop : 4 3 3 2 pop3 out
